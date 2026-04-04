@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "WebFetch(domain:www.thariq.io)",
-      "Bash(npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir --import-alias \"@/*\" --yes)"
+      "Bash(npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir --import-alias \"@/*\" --yes)",
+      "Bash(export PATH=\"/opt/homebrew/opt/node@20/bin:$PATH\")",
+      "Bash(npx next:*)"
     ]
   }
 }

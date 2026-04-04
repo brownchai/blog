@@ -1,26 +1,413 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,500;1,400&display=swap');
 @import "tailwindcss";
 
+/* ─── Theme Variables ─────────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-gold: #c9a84c;
+
+  /* Professional (dark) */
+  --pro-bg: #0c0c0c;
+  --pro-bg-card: #151515;
+  --pro-text: #e8e8e6;
+  --pro-text-muted: #888884;
+  --pro-border: #252525;
+  --pro-accent: #c9a84c;
+  --pro-hover-bg: #1a1a1a;
+
+  /* Personal (light) */
+  --per-bg: #f8f6f1;
+  --per-bg-card: #ffffff;
+  --per-text: #1a1917;
+  --per-text-muted: #7a7870;
+  --per-border: #e8e4db;
+  --per-accent: #c9783a;
+  --per-hover-bg: #f2ede4;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ─── Base Reset ──────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
+
+/* ─── Professional Mode ───────────────────────────────────── */
+body.mode-professional {
+  background-color: var(--pro-bg);
+  color: var(--pro-text);
+}
+
+body.mode-professional .site-card {
+  background: var(--pro-bg-card);
+  border-color: var(--pro-border);
+}
+
+body.mode-professional .text-muted {
+  color: var(--pro-text-muted);
+}
+
+body.mode-professional .accent {
+  color: var(--pro-accent);
+}
+
+body.mode-professional .post-item:hover {
+  background: var(--pro-hover-bg);
+}
+
+body.mode-professional .divider {
+  border-color: var(--pro-border);
+}
+
+body.mode-professional .toggle-btn {
+  border-color: var(--pro-border);
+  color: var(--pro-text-muted);
+}
+
+body.mode-professional .toggle-btn .active-segment {
+  color: var(--pro-text);
+}
+
+body.mode-professional .section-label {
+  color: var(--pro-text-muted);
+}
+
+body.mode-professional .prose-content {
+  color: var(--pro-text);
+}
+
+body.mode-professional .prose-content h1,
+body.mode-professional .prose-content h2,
+body.mode-professional .prose-content h3 {
+  color: var(--pro-text);
+}
+
+body.mode-professional .prose-content a {
+  color: var(--pro-accent);
+}
+
+body.mode-professional .prose-content blockquote {
+  border-left-color: var(--pro-border);
+  color: var(--pro-text-muted);
+}
+
+body.mode-professional .prose-content code {
+  background: var(--pro-bg-card);
+  border-color: var(--pro-border);
+  color: var(--pro-accent);
+}
+
+body.mode-professional .prose-content pre {
+  background: var(--pro-bg-card);
+  border-color: var(--pro-border);
+}
+
+/* ─── Personal Mode ───────────────────────────────────────── */
+body.mode-personal {
+  background-color: var(--per-bg);
+  color: var(--per-text);
+}
+
+body.mode-personal .site-card {
+  background: var(--per-bg-card);
+  border-color: var(--per-border);
+}
+
+body.mode-personal .text-muted {
+  color: var(--per-text-muted);
+}
+
+body.mode-personal .accent {
+  color: var(--per-accent);
+}
+
+body.mode-personal .post-item:hover {
+  background: var(--per-hover-bg);
+}
+
+body.mode-personal .divider {
+  border-color: var(--per-border);
+}
+
+body.mode-personal .toggle-btn {
+  border-color: var(--per-border);
+  color: var(--per-text-muted);
+}
+
+body.mode-personal .toggle-btn .active-segment {
+  color: var(--per-text);
+}
+
+body.mode-personal .section-label {
+  color: var(--per-text-muted);
+}
+
+body.mode-personal .prose-content {
+  color: var(--per-text);
+}
+
+body.mode-personal .prose-content h1,
+body.mode-personal .prose-content h2,
+body.mode-personal .prose-content h3 {
+  color: var(--per-text);
+}
+
+body.mode-personal .prose-content a {
+  color: var(--per-accent);
+}
+
+body.mode-personal .prose-content blockquote {
+  border-left-color: var(--per-border);
+  color: var(--per-text-muted);
+}
+
+body.mode-personal .prose-content code {
+  background: var(--per-bg-card);
+  border-color: var(--per-border);
+  color: var(--per-accent);
+}
+
+body.mode-personal .prose-content pre {
+  background: var(--per-bg-card);
+  border-color: var(--per-border);
+}
+
+/* ─── Toggle Button ───────────────────────────────────────── */
+.toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  border: 1px solid;
+  border-radius: 4px;
+  overflow: hidden;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.toggle-segment {
+  padding: 6px 14px;
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.toggle-segment.active-segment {
+  background: rgba(128,128,128,0.12);
+}
+
+.toggle-divider {
+  width: 1px;
+  height: 28px;
+  opacity: 0.3;
+}
+
+body.mode-professional .toggle-divider {
+  background: var(--pro-text-muted);
+}
+
+body.mode-personal .toggle-divider {
+  background: var(--per-text-muted);
+}
+
+/* ─── Post List ───────────────────────────────────────────── */
+.post-item {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 14px 0;
+  border-bottom: 1px solid;
+  cursor: pointer;
+  transition: background-color 0.15s ease, padding-left 0.15s ease;
+  text-decoration: none;
+  gap: 16px;
+}
+
+.post-item:first-child {
+  border-top: 1px solid;
+}
+
+body.mode-professional .post-item {
+  border-color: var(--pro-border);
+  color: var(--pro-text);
+}
+
+body.mode-personal .post-item {
+  border-color: var(--per-border);
+  color: var(--per-text);
+}
+
+.post-item:hover {
+  padding-left: 8px;
+}
+
+.post-title {
+  font-size: 0.9rem;
+  font-weight: 400;
+  flex: 1;
+  min-width: 0;
+}
+
+body.mode-personal .post-title {
+  font-family: 'Lora', Georgia, serif;
+}
+
+.post-meta {
+  font-size: 0.73rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ─── Prose Styles ────────────────────────────────────────── */
+.prose-content {
+  font-size: 1rem;
+  line-height: 1.8;
+  max-width: 680px;
+}
+
+body.mode-personal .prose-content {
+  font-family: 'Lora', Georgia, serif;
+}
+
+.prose-content h1 {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.9rem;
+  font-weight: 600;
+  line-height: 1.25;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.prose-content h2 {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin-top: 2.5rem;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.01em;
+}
+
+.prose-content h3 {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose-content p {
+  margin-bottom: 1.4rem;
+}
+
+.prose-content ul, .prose-content ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1.4rem;
+}
+
+.prose-content li {
+  margin-bottom: 0.4rem;
+}
+
+.prose-content a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: opacity 0.15s ease;
+}
+
+.prose-content a:hover {
+  opacity: 0.7;
+}
+
+.prose-content blockquote {
+  border-left: 3px solid;
+  padding-left: 1.25rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+}
+
+.prose-content code {
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 0.85em;
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid;
+}
+
+.prose-content pre {
+  border-radius: 8px;
+  border: 1px solid;
+  padding: 1.25rem;
+  overflow-x: auto;
+  margin-bottom: 1.4rem;
+  font-size: 0.85rem;
+  line-height: 1.7;
+}
+
+.prose-content pre code {
+  border: none;
+  padding: 0;
+  background: transparent;
+  font-size: inherit;
+}
+
+.prose-content img {
+  max-width: 100%;
+  border-radius: 8px;
+  margin: 1.5rem 0;
+}
+
+.prose-content hr {
+  margin: 2.5rem 0;
+  opacity: 0.2;
+}
+
+/* ─── Animations ──────────────────────────────────────────── */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeInUp 0.4s ease forwards;
+}
+
+.fade-in-delay-1 { animation-delay: 0.06s; opacity: 0; }
+.fade-in-delay-2 { animation-delay: 0.12s; opacity: 0; }
+.fade-in-delay-3 { animation-delay: 0.18s; opacity: 0; }
+
+/* ─── Focus ring ──────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+/* ─── Scrollbar ───────────────────────────────────────────── */
+body.mode-professional ::-webkit-scrollbar { width: 6px; }
+body.mode-professional ::-webkit-scrollbar-track { background: var(--pro-bg); }
+body.mode-professional ::-webkit-scrollbar-thumb { background: var(--pro-border); border-radius: 3px; }
+
+body.mode-personal ::-webkit-scrollbar { width: 6px; }
+body.mode-personal ::-webkit-scrollbar-track { background: var(--per-bg); }
+body.mode-personal ::-webkit-scrollbar-thumb { background: var(--per-border); border-radius: 3px; }
